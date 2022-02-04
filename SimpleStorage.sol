@@ -2,7 +2,14 @@
 pragma solidity ^0.6.0;
 
 contract SimpleStorage {
-    uint256 public favNum; //0
+    uint256 favNum; //0
+
+    struct People {
+        uint256 favNum;
+        string name;
+    }
+
+    People public person = People({favNum: 87, name: "Aditi"});
 
     function store(uint256 _num) public {
         favNum = _num;
