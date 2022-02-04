@@ -9,13 +9,17 @@ contract SimpleStorage {
         string name;
     }
 
-    People public person = People({favNum: 87, name: "Aditi"});
+    People[] public people;
 
-    function store(uint256 _num) public {
-        favNum = _num;
+    function store(uint256 _favNum) public {
+        favNum = _favNum;
     }
 
     function retrieve() public view returns (uint256) {
         return favNum;
+    }
+
+    function addPerson(string memory _name, uint256 _favNum) public {
+        people.push(People(_favNum, _name));
     }
 }
