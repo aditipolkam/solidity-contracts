@@ -7,7 +7,7 @@ contract Bank {
         uint256 accountBalance;
     }
 
-    Account[] public accounts;
+    Account[] private accounts;
     mapping(uint256 => uint256) public accountNoToBalance;
 
     function addAccount(
@@ -17,5 +17,17 @@ contract Bank {
     ) public {
         accounts.push(Account(_accountNumber, _accountHolder, _accountBalance));
         accountNoToBalance[_accountNumber] = _accountBalance;
+    }
+
+    function withdraw(uint256 _accountNumber, uint256 amount) public {
+        accountNoToBalance[_accountNumber] =
+            accountNoToBalance[_accountNumber] -
+            amount;
+    }
+
+    function deposit(uint256 _accountNumber, uint256 amount) public {
+        accountNoToBalance[_accountNumber] =
+            accountNoToBalance[_accountNumber] +
+            amount;
     }
 }
