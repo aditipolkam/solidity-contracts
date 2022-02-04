@@ -2,9 +2,9 @@
 pragma solidity ^0.6.0;
 
 contract SimpleStorage {
-    uint256 favNum; //0
+    uint256 public favNum; //0
 
-    function storeNum(uint256 num) public {
-        favNum = num;
+    function store(uint256 _num) public {
+        favNum = _num;
     }
 }
