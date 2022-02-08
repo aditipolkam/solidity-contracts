@@ -73,4 +73,8 @@ contract FundMe {
         uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1000000000000000000;
         return ethAmountInUsd;
     }
+
+    function withdraw() public payable {
+        payable(msg.sender).transfer(address(this).balance);
+    }
 }
