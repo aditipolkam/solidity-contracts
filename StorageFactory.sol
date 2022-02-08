@@ -3,7 +3,7 @@ pragma solidity ^0.6.0;
 
 import "./SimpleStorage.sol";
 
-contract StorageFactory {
+contract StorageFactory is SimpleStorage {
     SimpleStorage[] public simpleStorageArray;
 
     function createSimpleStorageContract() public {
@@ -14,16 +14,14 @@ contract StorageFactory {
     function sfStore(uint256 _simpleStorageIndex, uint256 _simpleStorageNumber)
         public
     {
-        SimpleStorage simpleStorage = SimpleStorage(
-            address(simpleStorageArray[_simpleStorageIndex])
+        SimpleStorage(address(simpleStorageArray[_simpleStorageIndex])).store(
+            _simpleStorageNumber
         );
-        simpleStorage.store(_simpleStorageNumber);
     }
 
     function sfget(uint256 _simpleStorageIndex) public view returns (uint256) {
-        SimpleStorage simpleStorage = SimpleStorage(
-            address(simpleStorageArray[_simpleStorageIndex])
-        );
-        return simpleStorage.retrieve();
+        return
+            SimpleStorage(address(simpleStorageArray[_simpleStorageIndex]))
+                .retrieve();
     }
 }
