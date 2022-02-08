@@ -37,6 +37,11 @@ interface AggregatorV3Interface {
 
 contract FundMe {
     mapping(address => uint256) public addressToAmountFunded;
+    address public owner;
+
+    constructor() public {
+        owner = msg.sender;
+    }
 
     function fund() public payable {
         uint256 minimumUSD = 50 * (10**18);
@@ -75,6 +80,7 @@ contract FundMe {
     }
 
     function withdraw() public payable {
+        require(msg.sender == owner);
         payable(msg.sender).transfer(address(this).balance);
     }
 }
