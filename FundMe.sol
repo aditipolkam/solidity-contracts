@@ -48,4 +48,13 @@ contract FundMe {
         );
         return priceFeed.version();
     }
+
+    function getPrice() public view returns (uint256) {
+        AggregatorV3Interface priceFeed = AggregatorV3Interface(
+            0x9326BFA02ADD2366b30bacB125260Af641031331
+        );
+        (, int256 answer, , , ) = priceFeed.latestRoundData();
+        return uint256(answer);
+        //3143.73126523 price of eth in usd
+    }
 }
