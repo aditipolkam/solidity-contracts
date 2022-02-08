@@ -79,8 +79,12 @@ contract FundMe {
         return ethAmountInUsd;
     }
 
-    function withdraw() public payable {
+    modifier onlyOwner() {
         require(msg.sender == owner);
+        _;
+    }
+
+    function withdraw() public payable onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
     }
 }
