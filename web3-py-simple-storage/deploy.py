@@ -53,7 +53,7 @@ transaction = SimpleStorage.constructor().buildTransaction(
         "nonce": nonce,
     }
 )
-
+print("Deploying contract...")
 # sign transaction
 signed_transaction = w3.eth.account.sign_transaction(
     transaction, private_key=private_key
@@ -62,6 +62,7 @@ signed_transaction = w3.eth.account.sign_transaction(
 # send transaction
 txn_hash = w3.eth.send_raw_transaction(signed_transaction.rawTransaction)
 txn_receipt = w3.eth.wait_for_transaction_receipt(txn_hash)
+print("Deployed!")
 
 # working with contracts
 # 1.contract address
@@ -69,8 +70,9 @@ txn_receipt = w3.eth.wait_for_transaction_receipt(txn_hash)
 simple_storage = w3.eth.contract(address=txn_receipt.contractAddress, abi=abi)
 
 # initial value of favnum
-print(simple_storage.functions.retrieve().call())
+print("Initial value of favNum: ", simple_storage.functions.retrieve().call())
 
+print("Updating contract...")
 store_transaction = simple_storage.functions.store(15).buildTransaction(
     {
         "gasPrice": w3.eth.gas_price,
@@ -85,4 +87,5 @@ signed_store_transaction = w3.eth.account.sign_transaction(
 
 txn_hash = w3.eth.send_raw_transaction(signed_store_transaction.rawTransaction)
 txn_receipt = w3.eth.wait_for_transaction_receipt(txn_hash)
-print(simple_storage.functions.retrieve().call())
+print("Updated!")
+print("Updated value of favNum: ", simple_storage.functions.retrieve().call())
