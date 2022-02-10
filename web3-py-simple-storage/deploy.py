@@ -53,3 +53,11 @@ transaction = SimpleStorage.constructor().buildTransaction(
         "nonce": nonce,
     }
 )
+
+# sign transaction
+signed_transaction = w3.eth.account.sign_transaction(
+    transaction, private_key=private_key
+)
+print(signed_transaction)
+
+# send transaction
