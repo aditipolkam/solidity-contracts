@@ -62,3 +62,27 @@ signed_transaction = w3.eth.account.sign_transaction(
 # send transaction
 txn_hash = w3.eth.send_raw_transaction(signed_transaction.rawTransaction)
 txn_receipt = w3.eth.wait_for_transaction_receipt(txn_hash)
+
+# working with contracts
+# 1.contract address
+# 2.contract ABI
+simple_storage = w3.eth.contract(address=txn_receipt.contractAddress, abi=abi)
+
+# initial value of favnum
+print(simple_storage.functions.retrieve().call())
+
+store_transaction = simple_storage.functions.store(15).buildTransaction(
+    {
+        "gasPrice": w3.eth.gas_price,
+        "chainId": chain_id,
+        "from": myaddress,
+        "nonce": nonce + 1,
+    }
+)
+signed_store_transaction = w3.eth.account.sign_transaction(
+    store_transaction, private_key=private_key
+)
+
+txn_hash = w3.eth.send_raw_transaction(signed_store_transaction.rawTransaction)
+txn_receipt = w3.eth.wait_for_transaction_receipt(txn_hash)
+print(simple_storage.functions.retrieve().call())
