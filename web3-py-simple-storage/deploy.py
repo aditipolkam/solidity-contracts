@@ -38,10 +38,18 @@ abi = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["abi"]
 
 # w3 connect to ganache
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
-chain_id = 5777
-myaddress = "0xF591cCB0edA6AC9F51407204750Bb72fC72Ac90A"
+chain_id = 1337
+myaddress = "0x9216CA29F0B5B0bdA57dDFD666076f27120AeaB1"
 private_key = os.getenv("PRIVATE_KEY")
 
 SimpleStorage = w3.eth.contract(abi=abi, bytecode=bytecode)
 # build transaction
 nonce = w3.eth.getTransactionCount(myaddress)  # get latest transaction
+transaction = SimpleStorage.constructor().buildTransaction(
+    {
+        "gasPrice": w3.eth.gas_price,
+        "chainId": chain_id,
+        "from": myaddress,
+        "nonce": nonce,
+    }
+)
