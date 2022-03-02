@@ -63,11 +63,12 @@ contract FundMe {
 
     function getPrice() public view returns (uint256) {
         AggregatorV3Interface priceFeed = AggregatorV3Interface(
-            0x9326BFA02ADD2366b30bacB125260Af641031331
+            0x9326BFA02ADD2366b30bacB125260Af641031331 //contract address of aggregator - eth->USD
         );
         (, int256 answer, , , ) = priceFeed.latestRoundData();
-        return uint256(answer * 10000000000);
-        //3143.73126523 price of eth in usd
+        //314373126523 price of eth returned by answer having 8 decimal places
+        return uint256(answer * 10000000000); //18 decimal places
+        
     }
 
     //1000000000
@@ -76,9 +77,9 @@ contract FundMe {
         view
         returns (uint256)
     {
-        uint256 ethPrice = getPrice();
-        uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1000000000000000000;
-        return ethAmountInUsd;
+        uint256 ethPrice = getPrice();  //18 decimal places
+        uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1000000000000000000; //current price of eth * amount of eth sent
+        return ethAmountInUsd; //amount of eth sent in USD
     }
 
     modifier onlyOwner() {
