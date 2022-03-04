@@ -4,10 +4,14 @@ from web3 import Web3
 DECIMALS = 8
 STARTING_PRICE = 200000000000
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
+FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
 
 
 def get_account():
-    if network.show_active not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
+    if (
+        network.show_active in LOCAL_BLOCKCHAIN_ENVIRONMENTS
+        or network.show_active in FORKED_LOCAL_ENVIRONMENTS
+    ):
         return accounts[0]
     else:
         # account = accounts.load("test-acc")  # for encryption method
