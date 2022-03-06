@@ -1,5 +1,4 @@
 from brownie import accounts, config, network, MockV3Aggregator
-from web3 import Web3
 
 DECIMALS = 8
 STARTING_PRICE = 200000000000
