@@ -1,7 +1,7 @@
 import pytest
 from scripts.helpful_scripts import LOCAL_BLOCKCHAIN_ENVIRONMENTS, get_account
 from brownie import network
-from scripts.deploy_create import deploy_create
+from scripts.simple.deploy_create import deploy_create
 
 
 def can_create_simple_collectible():
