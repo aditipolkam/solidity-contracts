@@ -9,7 +9,7 @@ sample_token_uri = (
 def deploy_create():
     account = get_account()
     advanced_collectible = AdvancedCollectible.deploy(
-        get_contract("vrf_cooridnator"),
+        get_contract("vrf_coordinator"),
         get_contract("link_token"),
         config["networks"][network.show_active()]["keyhash"],
         config["networks"][network.show_active()]["fee"],
