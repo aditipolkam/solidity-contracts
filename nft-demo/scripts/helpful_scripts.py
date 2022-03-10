@@ -6,6 +6,7 @@ from brownie import (
     Contract,
     LinkToken,
 )
+from web3 import Web3
 
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["hardhat", "development", "ganache", "mainnet-fork"]
 OPENSEA_URL = "https://testnets.opensea.io/assets/{}/{}"
@@ -72,3 +73,14 @@ def deploy_mocks(decimals=18, initial_value=2000):
     print(f"Deployed to {mock_vrf_coordinator.address}")
 
     print("Mocks Deployed!")
+
+
+def fund_with_link(
+    contract_address, account=None, link_token=None, amount=Web3.toWei(1, "ether")
+):
+    account = account if account else get_account(id=account)
+    link_token = link_token if link_token else get_contract("link_token")
+    funding_tx = link_token.transfer(contract_address, amount, {"from": account})
+    funding_tx.wait(1)
+    print(f"Funded contract {contract_address} with {amount} LINK")
+    return funding_tx
