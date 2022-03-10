@@ -10,6 +10,7 @@ from web3 import Web3
 
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["hardhat", "development", "ganache", "mainnet-fork"]
 OPENSEA_URL = "https://testnets.opensea.io/assets/{}/{}"
+BREED_MAPPING = {0: "PUG", 1: "SHIBA_INU", 2: "ST_BERNARD"}
 
 contract_to_mock = {
     "link_token": LinkToken,
@@ -84,3 +85,7 @@ def fund_with_link(
     funding_tx.wait(1)
     print(f"Funded contract {contract_address} with {amount} LINK")
     return funding_tx
+
+
+def get_breed(breed_id):
+    return BREED_MAPPING[breed_id]
