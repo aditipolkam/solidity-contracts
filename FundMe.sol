@@ -9,10 +9,9 @@ interface AggregatorV3Interface {
 
     function version() external view returns (uint256);
 
-    // getRoundData and latestRoundData should both raise "No data present"
-    // if they do not have data to report, instead of returning unset values
-    // which could be misinterpreted as actual reported values.
-    function getRoundData(uint80 _roundId)
+    function getRoundData(
+        uint80 _roundId
+    )
         external
         view
         returns (
@@ -40,12 +39,12 @@ contract FundMe {
     address public owner;
     address[] public funders;
 
-    constructor() public {
+    constructor() {
         owner = msg.sender;
     }
 
     function fund() public payable {
-        uint256 minimumUSD = 5 * (10**18);
+        uint256 minimumUSD = 5 * (10 ** 18);
         require(
             getConversionRate(msg.value) >= minimumUSD,
             "You need to spend more eth."
@@ -68,16 +67,13 @@ contract FundMe {
         (, int256 answer, , , ) = priceFeed.latestRoundData();
         //314373126523 price of eth returned by answer having 8 decimal places
         return uint256(answer * 10000000000); //18 decimal places
-        
     }
 
     //1000000000
-    function getConversionRate(uint256 ethAmount)
-        public
-        view
-        returns (uint256)
-    {
-        uint256 ethPrice = getPrice();  //18 decimal places
+    function getConversionRate(
+        uint256 ethAmount
+    ) public view returns (uint256) {
+        uint256 ethPrice = getPrice(); //18 decimal places
         uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1000000000000000000; //current price of eth * amount of eth sent
         return ethAmountInUsd; //amount of eth sent in USD
     }
