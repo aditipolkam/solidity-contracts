@@ -1,3 +1,4 @@
 # solidity-contracts
-learn solidity and writing smart contracts 
+
+a repo to dump all contracts written while learning solidity
 -- Aditi
